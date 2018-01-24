@@ -1,5 +1,8 @@
 # from: https://medium.com/ios-os-x-development/ensuring-unique-build-number-while-using-git-flow-and-continuous-integration-8d9de7ae31d4
-#
+
+# make sure you have the latest greatest version
+git pull
+
 # the truth for the current bundle version is on develop, switch branch and get the number
 # but first save the branch we are currently on to be able to come back
 BUILD_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -30,7 +33,9 @@ git push --set-upstream origin $GIT_BRANCH
 # first change to the develop branch
 git checkout develop
 #cherry pick (--strategy-option theirs forces to accept the change coming in over what is already here)
-git cherry-pick $GIT_BRANCH --strategy-option theirs
+LAST=$(git rev-parse HEAD)
+echo git cherry-pick $GIT_BRANCH --strategy-option theirs $LAST
+git cherry-pick $GIT_BRANCH --strategy-option theirs $LAST
 # push change to develop
 git push origin develop
 #go back to original branch so we can keep the build process going
