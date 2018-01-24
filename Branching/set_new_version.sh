@@ -31,17 +31,10 @@ git add Branching/Info.plist
 NEW_VERSION="Bumping version to: $BUNDLE_VERSION"
 echo $NEW_VERSION
 git commit -m "$NEW_VERSION"
-
-echo "--------------------------------------------------------"
-echo "Pushing the changes to GitHub"
-echo "--------------------------------------------------------"
-# get the current branch
-git rev-parse --abbrev-ref HEAD
-# push all changes
 git push
 
 echo "--------------------------------------------------------"
-echo "Updating develop to having the newer version"
+echo "Updating develop to have the bumped version"
 echo "--------------------------------------------------------"
 ### cherry pick the last commit from the feature branch to develop (commit with the version bump)
 # first change to the develop branch
@@ -49,6 +42,8 @@ git checkout develop
 #cherry pick the verison bump (--strategy-option theirs forces to accept the change coming in over what is already here)
 LAST=$(git log -n 1 $BUILD_GIT_BRANCH --pretty=format:"%H")
 git cherry-pick --strategy-option theirs $LAST
+BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "Branching/Info.plist")
+echo "Version in develop is now: $BUNDLE_VERSION"
 # push change to develop
 git push origin develop
 #go back to original branch so we can keep the build process going
