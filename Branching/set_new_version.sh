@@ -18,7 +18,7 @@ BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "Branching/I
 echo "Current bundle version is: $BUNDLE_VERSION"
 
 echo "--------------------------------------------------------"
-echo "Bumping version by one on $BUILD_GIT_BRANCH"
+echo "Bumping version on $BUILD_GIT_BRANCH"
 echo "--------------------------------------------------------"
 # switch back to the branch we're building
 git checkout $BUILD_GIT_BRANCH
@@ -29,9 +29,9 @@ BUNDLE_VERSION=$(($BUNDLE_VERSION + 1))
 ### add the change to the git index
 git add Branching/Info.plist
 # give a nice commit message
-NEW_VERSION = "Bumping version to: $BUNDLE_VERSION"
+NEW_VERSION="Bumping version to: $BUNDLE_VERSION"
 echo $NEW_VERSION
-git commit -m $NEW_VERSION
+git commit -m "$NEW_VERSION"
 
 echo "--------------------------------------------------------"
 echo "Pushing the changes to GitHub"
