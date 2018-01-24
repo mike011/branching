@@ -18,7 +18,7 @@ BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "Branching/I
 echo "Current bundle version is: $BUNDLE_VERSION"
 
 echo "--------------------------------------------------------"
-echo "Bumping version on $BUILD_GIT_BRANCH"
+echo "Bumping version"
 echo "--------------------------------------------------------"
 # switch back to the branch we're building
 git checkout $BUILD_GIT_BRANCH
@@ -47,8 +47,8 @@ echo "--------------------------------------------------------"
 ### cherry pick the last commit from the feature branch to develop (commit with the version bump)
 # first change to the develop branch
 git checkout develop
-#cherry pick (--strategy-option theirs forces to accept the change coming in over what is already here)
-LAST=$(git rev-parse HEAD)
+#cherry pick the verison bump (--strategy-option theirs forces to accept the change coming in over what is already here)
+LAST=$(git log -n 1 $BUILD_GIT_BRANCH --pretty=format:"%H")
 git cherry-pick $GIT_BRANCH --strategy-option theirs $LAST
 # push change to develop
 git push origin develop
