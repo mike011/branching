@@ -42,6 +42,8 @@ git checkout develop
 #cherry pick the verison bump (--strategy-option theirs forces to accept the change coming in over what is already here)
 LAST=$(git log -n 1 $BUILD_GIT_BRANCH --pretty=format:"%H")
 git cherry-pick --strategy-option theirs $LAST
+BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "Branching/Info.plist")
+echo "Version in develop is now: $BUNDLE_VERSION"
 # push change to develop
 git push origin develop
 #go back to original branch so we can keep the build process going
