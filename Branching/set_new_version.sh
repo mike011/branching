@@ -1,16 +1,15 @@
 # from: https://medium.com/ios-os-x-development/ensuring-unique-build-number-while-using-git-flow-and-continuous-integration-8d9de7ae31d4
 
 echo "--------------------------------------------------------"
-echo "Making sure you have the latest greatest version"
-echo "--------------------------------------------------------"
-git pull
-
-echo "--------------------------------------------------------"
 echo "Getting the latest bundle version from develop"
 echo "--------------------------------------------------------"
 # the truth for the current bundle version is on develop, switch branch and get the number
 # but first save the branch we are currently on to be able to come back
 BUILD_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+# make sure you branch exists on the server
+git push --set-upstream origin $BUILD_GIT_BRANCH
+# make sure you have the newest version of develop
+git pull
 # switch branch
 git checkout develop
 # get the current build number from the plist
@@ -32,25 +31,18 @@ git add Branching/Info.plist
 NEW_VERSION="Bumping version to: $BUNDLE_VERSION"
 echo $NEW_VERSION
 git commit -m "$NEW_VERSION"
+git push
 
 echo "--------------------------------------------------------"
-echo "Pushing the changes to GitHub"
-echo "--------------------------------------------------------"
-# get the current branch
-git rev-parse --abbrev-ref HEAD
-# push all changes
-git push --set-upstream origin $GIT_BRANCH
-
-echo "--------------------------------------------------------"
-echo "Updating develop to having the newer version"
+echo "Updating develop to have the bumped version"
 echo "--------------------------------------------------------"
 ### cherry pick the last commit from the feature branch to develop (commit with the version bump)
 # first change to the develop branch
 git checkout develop
 #cherry pick the verison bump (--strategy-option theirs forces to accept the change coming in over what is already here)
 LAST=$(git log -n 1 $BUILD_GIT_BRANCH --pretty=format:"%H")
-git cherry-pick $GIT_BRANCH --strategy-option theirs $LAST
+git cherry-pick --strategy-option theirs $LAST
 # push change to develop
 git push origin develop
 #go back to original branch so we can keep the build process going
-git checkout $GIT_BRANCH
+git checkout $BUILD_GIT_BRANCH
