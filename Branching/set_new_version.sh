@@ -21,7 +21,7 @@ git checkout $PARENT_GIT_BRANCH
 # get the current build number from the plist
 BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "Branching/Info.plist")
 echo "Current bundle version is: $BUNDLE_VERSION"
-BUNDLE_VERSION=$(($BUNDLE_VERSION + 1))
+BUNDLE_VERSION="${BUNDLE_VERSION%.*}.$((${BUNDLE_VERSION##*.}+1))"
 # save the new bundle version in info.plist
 
 echo "--------------------------------------------------------"
