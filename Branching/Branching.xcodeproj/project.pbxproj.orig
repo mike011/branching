@@ -354,7 +354,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+<<<<<<< HEAD
+				CURRENT_PROJECT_VERSION = 1.0.2.1;
+=======
 				CURRENT_PROJECT_VERSION = 12.13;
+>>>>>>> 7b50545f0d30c054bd77a34554b568e0cd4e76ed
 				DEVELOPMENT_TEAM = 46H57CBD4Q;
 				INFOPLIST_FILE = Branching/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -371,7 +375,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+<<<<<<< HEAD
+				CURRENT_PROJECT_VERSION = 1.0.2.1;
+=======
 				CURRENT_PROJECT_VERSION = 12.13;
+>>>>>>> 7b50545f0d30c054bd77a34554b568e0cd4e76ed
 				DEVELOPMENT_TEAM = 46H57CBD4Q;
 				INFOPLIST_FILE = Branching/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
