@@ -16,8 +16,16 @@ platform :ios do
   ###################### Version & Build Number Automation ######################
 
   desc "Increment the bundle number"
-  lane :increment_bundle_number do
-    sh "./increment_bundle_number.sh"
+  lane :set_version_to_release do
+    branch=git_branch
+    sh "git checkout release"
+    release_version=get_build_number
+    puts "release version is: " + release_version
+    
+    sh "git checkout " + branch
+    sh '/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ' + release_version + '" "../Branching/Info.plist"'
+    sh '/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ' + release_version + '" "../BranchingTests/Info.plist"'
+    sh 'cd .. && agvtool new-version ' + release_version + '&& cd ./fastlane'
   end
 
  desc "Increment the version & build number (patch)"

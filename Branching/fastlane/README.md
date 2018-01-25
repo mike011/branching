@@ -16,9 +16,9 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios increment_bundle_number
+### ios set_version_to_release
 ```
-fastlane ios increment_bundle_number
+fastlane ios set_version_to_release
 ```
 Increment the bundle number
 ### ios increment_patch
