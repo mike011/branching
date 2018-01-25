@@ -17,7 +17,7 @@ platform :ios do
 
   desc "Increment the bundle number"
   lane :increment_bundle_number do
-    sh ./increment_bundle_number.sh
+    sh "./increment_bundle_number.sh"
   end
 
  desc "Increment the version & build number (patch)"

@@ -16,11 +16,11 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios inc
+### ios increment_bundle_number
 ```
-fastlane ios inc
+fastlane ios increment_bundle_number
 ```
-
+Increment the bundle number
 ### ios increment_patch
 ```
 fastlane ios increment_patch
