@@ -40,18 +40,4 @@ git add Branching/Info.plist BranchingTests/Info.plist Branching.xcodeproj/proje
 git commit -m "Setting version to $BUNDLE_VERSION"
 git push
 
-echo "--------------------------------------------------------"
-echo "Updating parent branch ($PARENT_GIT_BRANCH) to bumped version"
-echo "--------------------------------------------------------"
-### cherry pick the last commit from the feature branch to parent branch (commit with the version bump)
-# first change to the parent branch
-git checkout $PARENT_GIT_BRANCH
-#cherry pick the verison bump (--strategy-option theirs forces to accept the change coming in over what is already here)
-LAST=$(git log -n 1 $BUILD_GIT_BRANCH --pretty=format:"%H")
-git cherry-pick --strategy-option theirs $LAST
-BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "../Branching/Info.plist")
-echo "Version in parent branch is now: $BUNDLE_VERSION"
-# push change to parent branch
-git push origin $PARENT_GIT_BRANCH
-#go back to original branch so we can keep the build process going
 git checkout $BUILD_GIT_BRANCH
