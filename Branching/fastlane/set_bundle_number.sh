@@ -1,11 +1,12 @@
 # from: https://medium.com/ios-os-x-development/ensuring-unique-build-number-while-using-git-flow-and-continuous-integration-8d9de7ae31d4
+if [ -z "$1" ]
+then
+  echo "You have to pass in the parent branch as the first argument"
+  exit
+fi
 
-PARENT_GIT_BRANCH=$(git show-branch \
-| grep '*' \
-| grep -v "$(git rev-parse --abbrev-ref HEAD)" \
-| head -n1 \
-| sed 's/.*\[\(.*\)\].*/\1/' \
-| sed 's/[\^~].*//')
+PARENT_GIT_BRANCH=$1
+
 echo "--------------------------------------------------------"
 echo "Getting the latest bundle version from the parent branch: $PARENT_GIT_BRANCH"
 echo "--------------------------------------------------------"
@@ -36,7 +37,7 @@ agvtool new-version $BUNDLE_VERSION
 ### add the change to the git index
 git add Branching/Info.plist BranchingTests/Info.plist Branching.xcodeproj/project.pbxproj
 # give a nice commit message
-git commit -m "Bumping version to: $BUNDLE_VERSION"
+git commit -m "Setting version to $BUNDLE_VERSION"
 git push
 
 echo "--------------------------------------------------------"

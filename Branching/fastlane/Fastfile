@@ -16,8 +16,18 @@ platform :ios do
   ###################### Version & Build Number Automation ######################
 
   desc "Increment the bundle number"
-  lane :increment_bundle_number do
-    sh "./increment_bundle_number.sh"
+  lane :set_version_to_release do
+    branch=git_branch
+    sh "git checkout release"
+    release_version=get_build_number
+    puts "release version is: " + release_version
+
+    sh "git checkout " + branch
+    sh '/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ' + release_version + '" "../Branching/Info.plist"'
+    sh '/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ' + release_version + '" "../BranchingTests/Info.plist"'
+    sh 'cd .. && agvtool new-version ' + release_version + '&& cd ./fastlane'
+
+    commit_version_to_git
   end
 
  desc "Increment the version & build number (patch)"
@@ -41,7 +51,7 @@ platform :ios do
  desc "Commits a new version into Git"
  private_lane :commit_version_to_git do
    command = "cd .. &&"
-   command += "git commit -m 'Version bump' Branching.xcodeproj/project.pbxproj Branching/Info.plist BranchingTests/Info.plist &&"
+   command += "git commit -m 'Version set' Branching.xcodeproj/project.pbxproj Branching/Info.plist BranchingTests/Info.plist &&"
    command += "git push origin HEAD:" + git_branch
    sh command
  end
