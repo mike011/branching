@@ -34,7 +34,7 @@ git checkout $BUILD_GIT_BRANCH
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUNDLE_VERSION" "../BranchingTests/Info.plist"
 agvtool new-version $BUNDLE_VERSION
 ### add the change to the git index
-git add Branching/Info.plist BranchingTests/Info.plist Branching.xcodeproj/project.pbxproj
+git add ../Branching/Info.plist ../BranchingTests/Info.plist ../Branching.xcodeproj/project.pbxproj
 # give a nice commit message
 git commit -m "Bumping version to: $BUNDLE_VERSION"
 git push
