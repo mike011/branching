@@ -15,6 +15,11 @@ platform :ios do
 
   ###################### Version & Build Number Automation ######################
 
+  desc "Increment the bundle number"
+  lane :increment_bundle_number do
+    sh ./increment_bundle_number.sh
+  end
+
  desc "Increment the version & build number (patch)"
  lane :increment_patch do
    increment_version_number(bump_type: "patch")
